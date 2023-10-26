@@ -35,8 +35,32 @@ Follow up: Could you solve it without converting the integer to a string?
 
 class Solution:
     def isPalindrome(self, x: int) -> bool:
-        if x < 0:
+        # Converting to string is easier to implement
+        #if x < 0:
+        #    return False
+        #else:
+        #    y = str(x)[::-1]
+        #    return x == int(y)
+
+        # Reverse the number continuously by divinding with 10
+        # and shifting left
+        # If the number ends with 0, not a palindrome
+        # To check for palindrome, don't need to go through the whole
+        # reversal, compare first half with later half.
+        # For even length numbers:
+        # 1221 - first two are same as last two
+        # For odd length numbers:
+        # 12321 - same as above and 3 can be ignored by //10 
+
+        if x < 0 or (x!= 0 and x%10 == 0):
             return False
-        else:
-            y = str(x)[::-1]
-            return x == int(y)
+        
+        reversed_num = 0
+
+        while x > reversed_num:
+            reversed_num = reversed_num * 10 + x % 10
+            x //= 10
+
+        # x and reversed_num are 12 (in 1221)
+        # x is 12 and reversed_num is 123 in 12321 and hence //10
+        return x == reversed_num or x == reversed_num//10 

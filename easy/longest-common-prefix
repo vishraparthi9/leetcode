@@ -1,0 +1,53 @@
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+ 
+
+Example 1:
+
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+
+Example 2:
+
+Input: strs = ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+
+ 
+
+Constraints:
+
+    1 <= strs.length <= 200
+    0 <= strs[i].length <= 200
+    strs[i] consists of only lowercase English letters.
+
+-----------
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        prefix = ""
+        # If length of strs is only 1, return that
+        if len(strs) == 1:
+            return strs[0]
+
+        # Compare the first two elements and return the common str
+        if len(strs) >= 2:
+            for i in range(min(len(strs[0]), len(strs[1]))):
+                if strs[0][i] == strs[1][i]:
+                    prefix = prefix + strs[0][i]
+                else:
+                    break
+
+        # Starting with 3rd element, start comparing if it starts with prefix
+        # If not, reduce the prefix by a char each time
+        for i in range(2, len(strs)):
+
+            if len(prefix) == 0:
+                break
+
+            while not strs[i].startswith(prefix):
+                prefix = prefix[:-1]
+
+        return prefix
